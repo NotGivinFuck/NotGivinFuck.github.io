@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lua Obfuscator DarkRaiX</title>
+    <title>Lua Obfuscator vedro</title>
     <style>
       /* Animations */
 
@@ -323,7 +323,7 @@
   <body>
     <!-- Navbar -->
     <nav class="navbar">
-      <h1 class="logo"><span>DarkRaiX</span>obfuscator</h1>
+      <h1 class="logo"><span>vedro</span>obfuscator</h1>
       <div class="account" style="--order: 4">
         <div class="profile"></div>
       </div>
@@ -468,7 +468,7 @@
       // @param var3 variable
       // @param tablenya table
       const alibi = (var1, var2, var3, tablenya) => {
-        return `_ENV={string=string,table=table,math=math,pairs=pairs,load=load,print=print};${var1}="${var2}";${var2}="${var1}";${var3}={${tablenya}};function xor(t)local ciphertext="";for i=1,#${var2} do local byte=string.byte(${var2}, i);local quibit=string.byte(${var1},(i-1)%#${var1}+1);ciphertext=ciphertext..string.char(bit.bxor(byte,quibit));end;return ciphertext;end;bit={bxor=function(a,b)local r,m=0,1;while a>0 and b>0 do local aa,bb=a%2,b%2;r=r+m*((aa+bb)%2);m=m*2;a=math.floor(a/2);b=math.floor(b/2) end;if a>0 then r=r+m*a end;if b>0 then r=r+m*b end;return r;end};xor(${var3})${ran1}z="Encrypt By Razu";`;
+        return `_ENV={string=string,table=table,math=math,pairs=pairs,load=load,print=print};${var1}="${var2}";${var2}="${var1}";${var3}={${tablenya}};function xor(t)local ciphertext="";for i=1,#${var2} do local byte=string.byte(${var2}, i);local quibit=string.byte(${var1},(i-1)%#${var1}+1);ciphertext=ciphertext..string.char(bit.bxor(byte,quibit));end;return ciphertext;end;bit={bxor=function(a,b)local r,m=0,1;while a>0 and b>0 do local aa,bb=a%2,b%2;r=r+m*((aa+bb)%2);m=m*2;a=math.floor(a/2);b=math.floor(b/2) end;if a>0 then r=r+m*a end;if b>0 then r=r+m*b end;return r;end};xor(${var3})${ran1}z="Encrypt By vedro";`;
       };
 
       // @return function decrypt real
@@ -518,7 +518,7 @@
         read.readAsText(file);
         read.onload = () => {
           const sc = read.result;
-          const templateE = `local key=[[${keys}]];${ran1}z="Encrypt By Razu";${ran2}=${ran1};${ran3}=${ran2};${ran4}=${ran3};${ran5}=${ran4};${ran6}=${ran5};`;
+          const templateE = `local key=[[${keys}]];${ran1}z="Encrypt By vedro";${ran2}=${ran1};${ran3}=${ran2};${ran4}=${ran3};${ran5}=${ran4};${ran6}=${ran5};`;
           const Output =
             templateE +
             alibi(ran1, ran2, ran3, tab1) +
