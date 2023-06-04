@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lua Obfuscator Vedro</title>
+    <title>Vedro Lua Cryptor</title>
     <style>
       /* Animations */
 
@@ -55,25 +55,24 @@
         justify-content: space-between;
         align-items: center;
         padding: 1.4rem 5%;
-        background-color: rgba(0, 0, 0);
-        border-bottom: 3px solid rgb(0, 0, 255);
+        background-color: rgba(20, 20, 20);
+        border-bottom: 3px solid rgb(0, 255, 0);
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         z-index: 9999;
-        box-shadow: 0 0px 20px #0000FF;
+        box-shadow: 0 0px 20px #00FF00;
       }
 
       .logo span {
-        color: #0000FF;
+        color: #00FF00;
         transition: 0.2s ease-in-out;
       }
 
       .logo {
         display: flex;
         transition: 0.2s ease-in-out;
-        animation: idle 3s ease-in-out infinite alternate;
       }
 
       .logo:hover {
@@ -128,7 +127,7 @@
         background-image: url("https://i.ibb.co/tPDvC3F/photo-2023-05-31-03-11-52.jpg");
         background-size: cover;
         background-repeat: no-repeat;
-        box-shadow: 0 0 12px#0000FF;
+        box-shadow: 0 0 12px#00FF00;
       }
 
       .profile:hover {
@@ -149,10 +148,8 @@
         display: block;
         width: 100%;
         position: relative;
-        background-color: rgba(0, 0, 0);
-        border: 2px solid rgba(0, 0, 255);
-        border-radius: 10px;
-        box-shadow: 0 0 20px#0000FF;
+        background-color: rgba(20, 20, 20);
+
         animation: popup 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1 normal
           forwards;
       }
@@ -162,7 +159,7 @@
         padding: 1rem;
         justify-content: center;
         align-items: center;
-        border-bottom: 2px solid rgb(0, 0, 255);
+        border-bottom: 2px solid rgb(0, 255, 0);
       }
 
       .card-header h3 {
@@ -198,9 +195,9 @@
         border-radius: 5px;
         color: rgba(255, 255, 255, 0.9);
         padding: 10px;
-        box-shadow: 0 0 10px #222;
         transition: 0.2s ease-in-out;
-        border: 2px solid rgba(0, 0, 255);
+        border: 1px solid rgba(0, 255, 0);
+		border-radius: 20px;
       }
 
       .filescript #num-of-files {
@@ -217,7 +214,7 @@
       .filescript label:focus,
       .filescript label:valid,
       .filescript label:active {
-        border: 2px solid rgb(0, 0, 255);
+        border: 2px solid rgb(0, 255, 0);
         transform: scale(0.9);
       }
 
@@ -231,7 +228,7 @@
       .inputBox input {
         width: 90%;
         padding: 10px;
-        border: 1px solid rgba(0, 0, 255);
+        border: 1px solid rgba(0, 255, 0);
         background: rgba(68, 68, 68, 0.5);
         border-radius: 5px;
         font-size: 1em;
@@ -268,6 +265,7 @@
 
       /* Button submit */
       .card-body button {
+		border-radius: 20px;
         display: block;
         margin-top: 1rem;
         text-transform: uppercase;
@@ -275,9 +273,9 @@
         font-weight: 500;
         font-size: 1.3em;
         position: relative;
-        background: rgba(0, 0, 255);
+        background: rgba(0, 255, 0);
         padding: 15px 30px;
-        transition: 0.5s;
+		box-shadow: 0 0px 20px #00FF00;
       }
 
       .card-body button:hover {
@@ -291,6 +289,7 @@
         position: absolute;
         inset: 2px;
         background: rgb(68, 68, 68);
+		border-radius: 20px;
       }
 
       .card-body button span {
@@ -323,7 +322,7 @@
   <body>
     <!-- Navbar -->
     <nav class="navbar">
-      <h1 class="logo"><span>vedro</span>obfuscator</h1>
+      <h1 class="logo"><span>vedr</span>Cryptor</h1>
       <div class="account" style="--order: 4">
         <div class="profile"></div>
       </div>
@@ -333,163 +332,133 @@
     <form id="form">
       <div class="card">
         <div class="card-header">
-          <h3>Obfuscator</h3>
+          <h3>Crypt</h3>
         </div>
         <div class="card-body">
           <div class="filescript">
             <h3>Upload Your File Here!</h3>
             <input type="file" id="file" />
-            <label for="file">Select Script</label>
+            <label for="file">Select file</label>
             <div id="num-of-files">No File Choosen</div>
-            <h5>Only receive .lua or .txt file!</h5>
-          </div>
-          <div class="inputBox">
-            <input type="text" required id="key" />
-            <span>Encrypt Key</span>
-          </div>
-          <h5>For encrypt and decrypt script.</h5>
-          <button type="submit" id="obfuscate">
-            <span>Obfuscate</span><i></i>
+            <h5>Only .lua .txt files</h5>
+		  </div>
+          <button type="submit" id="Crypt">
+            <span>Crypt</span><i></i>
           </button>
         </div>
       </div>
     </form>
     <script>
-      // declare realkey variable
-      let realKey = "";
+	
+		function getRandomInt(min, max) {
+			return Math.floor(Math.random() * (max - min) + min);
+		};
+	  
+		function crypt(text) {
+			let n1 = getRandomInt(1, 20);
+			let n2 = getRandomInt(1, 20);
+			
+			while (n1 == n2) {
+				let n1 = getRandomInt(1, 20);
+				let n2 = getRandomInt(1, 20);
+			}
+			
+			let n3 = getRandomInt(0, text.length);
+			let key = [n3+1, text.charCodeAt(n3)];
+			let crypted_text = '{{' + text.length;
+			
+			for (let i = 0; i < text.length; i++) {
+				let char = text.charCodeAt(i);
+				crypted_text += ',' + (char - n1 + n2);
+			}
+			
+			crypted_text += '},{'
+			
+			for (let i = 0; i < key.length; i++) {
+				crypted_text += key[i] + ',';
+			}
+			
+			crypted_text = crypted_text.slice(0, -1) + '}}';
+			
+			let antidecompile = `local _a = ({{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}})[1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1]
+local function _() ::SOSAT:: goto SOSAT end
+local function __() return`;
+			for (let i = 0; getRandomInt(220, 228); i++) {
+				antidecompile += " " + getRandomInt(-2147483648, 2147483647) + ",";
+			}
+			antidecompile =  antidecompile + " " + getRandomInt(-2147483648, 2147483647) + " end\n";
+			crypted_text = antidecompile + `local g = _G
+local char = 'c'
+local str = ''
 
-      // random chars length
-      let leng = 128;
-      // key integer length xor loop
-      let k = 0;
+local function _____()
+return str[char .. 'r']
+end
+   
+char = char .. 'h' .. 'a'
 
-      // characters
-      const abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-      // characters table
-      let abcTab = [];
+local char = _____()
 
-      // inserting chars
-      for (let i = 0; i < abc.length; i++) {
-        abcTab[i] = abc[i];
-      }
+local chars = {
+    {
+        166,
+        154,
+        173,
+        161
+    },
 
-      // ran{m string
-      let ran1 = "";
-      let ran2 = "";
-      let ran3 = "";
-      let ran4 = "";
-      let ran5 = "";
-      let ran6 = "";
-      for (let i = 0; i < leng; i++) {
-        ran1 += abcTab[Math.floor(Math.random() * abcTab.length)];
-        ran2 += abcTab[Math.floor(Math.random() * abcTab.length)];
-        ran3 += abcTab[Math.floor(Math.random() * abcTab.length)];
-        ran4 += abcTab[Math.floor(Math.random() * abcTab.length)];
-        ran5 += abcTab[Math.floor(Math.random() * abcTab.length)];
-        ran6 += abcTab[Math.floor(Math.random() * abcTab.length)];
-      }
+    {
+        171,
+        154,
+        167,
+        157,
+        168,
+        166
+    }
+}
 
-      // function encrypt xor
-      const xorE = (sc, key) => {
-        const tabel = [];
-        let k = 0;
-        for (let i = 0; i < sc.length; i++) {
-          let byteValue = sc.charCodeAt(i) + key.charCodeAt(k);
-          k++;
-          tabel.push(byteValue);
-          if (k == key.length) {
-            k = 0;
-          }
-        }
-        return tabel;
-      };
+local math = ''
+local random = ''
 
-      const xorE2 = (sc, key) => {
-        let tabel = [];
-        for (let i = 0; i < sc.length; i++) {
-          k += 1;
-          let byte = sc.charCodeAt(i) + key.charCodeAt(k);
-          tabel.push(byte);
-          if (k == key.length) {
-            k = 0;
-          }
-        }
-        k = 0;
-        return tabel;
-      };
+for i = 1, #chars[1] do
+    math = math..char(chars[1][i] - 57)
+end
+for i = 1, #chars[2] do
+    random = random..char(chars[2][i] - 57)
+end
 
-      // function decrypt xor for testing
-      const xorD = (tabel) => {
-        let hasil = "";
-        for (const v of tabel) {
-          k = k + 1;
-          hasil = hasil + String.fromCharCode(v - key.charCodeAt(k));
-          if (k == key.length) {
-            k = 0;
-          }
-        }
-        return hasil;
-      };
+local random = g[math][random]
 
-      // declare tabel alibi
-      let tab1 = [];
-      let tab2 = [];
-      let tab3 = [];
-      let tab4 = [];
-      let tab5 = [];
-      let tab6 = [];
+local function decrypt(tab) -- decrypt
+    local a, b = tab[2][1], tab[2][2]
+    local n1, n2 = random(20), random(20)
+    while tab[1][a + 1] - n2 + n1 ~= b do n1, n2 = random(20), random(20) end
+    local decrypt_text = ''
+    for i = 2, tab[1][1] + 1 do
+        decrypt_text = decrypt_text .. char(tab[1][i] - n2 + n1)
+    end
+    return decrypt_text
+end
 
-      for (let i = 0; i < leng; i++) {
-        // tab1[i] = string.byte(abcTab[math.ranm(1, #abcTab)]
-        tab1[i] =
-          abcTab[Math.floor(Math.random() * abcTab.length)].charCodeAt(0);
-        tab2[i] =
-          abcTab[Math.floor(Math.random() * abcTab.length)].charCodeAt(0);
-        tab3[i] =
-          abcTab[Math.floor(Math.random() * abcTab.length)].charCodeAt(0);
-        tab4[i] =
-          abcTab[Math.floor(Math.random() * abcTab.length)].charCodeAt(0);
-        tab5[i] =
-          abcTab[Math.floor(Math.random() * abcTab.length)].charCodeAt(0);
-        tab6[i] =
-          abcTab[Math.floor(Math.random() * abcTab.length)].charCodeAt(0);
-      }
+local res = decrypt` + crypted_text + `
 
-      tab1 = tab1.join();
-      tab2 = tab2.join();
-      tab3 = tab3.join();
-      tab4 = tab4.join();
-      tab5 = tab5.join();
-      tab6 = tab6.join();
+local pcall = g[decrypt{{5, 125, 112, 110, 121, 121}, {4, 108}}]
+local lua_thread = g[decrypt{{10, 120, 129, 109, 107, 128, 116, 126, 113, 109, 112}, {4, 95}}]
+local create = decrypt{{6, 114, 129, 116, 112, 131, 116}, {3, 101}}
+local loadstring = g[decrypt{{10,106,109,95,98,113,114,112,103,108,101},{2,111}}]
+local string = decrypt{{6, 118, 119, 117, 108, 113, 106}, {1, 115}}
+local dump = decrypt{{4, 108, 125, 117, 120}, {2, 117}}
 
-      // function alibi alias pengalhan
-      // @param var1 key
-      // @param var2 string
-      // @param var3 variable
-      // @param tablenya table
-      const alibi = (var1, var2, var3, tablenya) => {
-        return `_ENV={string=string,table=table,math=math,pairs=pairs,load=load,print=print};${var1}="${var2}";${var2}="${var1}";${var3}={${tablenya}};function xor(t)local ciphertext="";for i=1,#${var2} do local byte=string.byte(${var2}, i);local quibit=string.byte(${var1},(i-1)%#${var1}+1);ciphertext=ciphertext..string.char(bit.bxor(byte,quibit));end;return ciphertext;end;bit={bxor=function(a,b)local r,m=0,1;while a>0 and b>0 do local aa,bb=a%2,b%2;r=r+m*((aa+bb)%2);m=m*2;a=math.floor(a/2);b=math.floor(b/2) end;if a>0 then r=r+m*a end;if b>0 then r=r+m*b end;return r;end};xor(${var3})${ran1}z="Encrypt By vedro";`;
-      };
+local dump = g[string][dump]
 
-      // @return function decrypt real
-      const decX = (tabel) => {
-        // ran3
-        let script = ran3;
-        // ran4
-        let keyleng = ran4;
-        // ran1
-        let l = ran1;
-        // ran2
-        let v = ran2;
-        // ran5
-        let hasil = ran5;
-        return `${script}={${tabel.join()}};${keyleng}=0;${hasil}='';for ${l},${v} in pairs(${script}) do ${keyleng}=${keyleng}+1;${hasil}=${hasil}.._ENV["\\115\\116\\114\\105\\110\\103"]["\\99\\104\\97\\114"](${v}-_ENV["\\115\\116\\114\\105\\110\\103"]["\\98\\121\\116\\101"]("${realKey}",${keyleng}));if ${keyleng}==#"${realKey}" then ${keyleng}=0;end;end;if ${ran1}z=="\\69\\110\\99\\114\\121\\112\\116\\32\\66\\121\\32\\82\\97\\122\\117" then _ENV["\\108\\111\\97\\100"](${hasil})() else print("Error whle runing this code");end;`;
-      };
+local resc = pcall(dump, loadstring)
 
-      // @return Gabungan semuanya
-      // Output = templateE + alibi(ran1,ran2,ran3,tab1) + decX(xorE())
-      // console.log(Output)
-
+if not resc then
+    lua_thread[create](function() loadstring(res)() end)
+end`;
+			return crypted_text;
+		};
+	
       const fileInput = document.getElementById("file");
       const fileChoosen = document.getElementById("num-of-files");
       const read = new FileReader();
@@ -510,24 +479,11 @@
         console.log("Encrypting..");
         let file = document.getElementById("file").files[0];
         if (file == null) alert("Please upload file first!");
-        let keys = document.getElementById("key").value;
-        console.log(keys);
-        for (let i = 0; i < keys.length; i++) {
-          realKey += "\\" + keys.charCodeAt(i);
-        }
         read.readAsText(file);
         read.onload = () => {
           const sc = read.result;
-          const templateE = `local key=[[${keys}]];${ran1}z="Encrypt By vedro";${ran2}=${ran1};${ran3}=${ran2};${ran4}=${ran3};${ran5}=${ran4};${ran6}=${ran5};`;
           const Output =
-            templateE +
-            alibi(ran1, ran2, ran3, tab1) +
-            alibi(ran4, ran2, ran5, tab2) +
-            alibi(ran6, ran3, ran1, tab3) +
-            decX(xorE(sc, keys)) +
-            alibi(ran2, ran4, ran6, tab4) +
-            alibi(ran1, ran4, ran5, tab5) +
-            alibi(ran2, ran1, ran3, tab6);
+            crypt(sc)
           let blob = new Blob([Output], { type: "octet-stream" });
           const href = URL.createObjectURL(blob);
           const a = Object.assign(document.createElement("a"), {
