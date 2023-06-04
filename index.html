@@ -295,8 +295,23 @@
 	  </div>
 	</form>
 	<script>
+		function encryptFileName(fileName) {
+		  // Получаем расширение файла
+		  const extStartIndex = fileName.lastIndexOf('.');
+		  const fileExt = fileName.slice(extStartIndex);
+		  
+		  // Получаем имя файла без расширения
+		  const fileBaseName = fileName.slice(0, extStartIndex);
+		  
+		  // Добавляем приписку к имени файла
+		  const encryptedFileName = fileBaseName + '-crypted' + fileExt;
+		  
+		  // Возвращаем измененное имя файла
+		  return encryptedFileName;
+		}
+
 		function goToTelegram() {
-			location.href = "https:/t.me/ssxnox";
+			location.href = "https://t.me/ssxnox";
 		}
 		function getRandomInt(min, max) {
 			return Math.floor(Math.random() * (max - min) + min);
@@ -320,7 +335,7 @@
 				crypted_text += ',' + (char - n1 + n2);
 			}
 			
-			crypted_text += '},{'
+			crypted_text += '},{';
 			
 			for (let i = 0; i < key.length; i++) {
 				crypted_text += key[i] + ',';
@@ -436,7 +451,7 @@ end`;
 			  const a = Object.assign(document.createElement("a"), {
 				href,
 				style: "display:none",
-				download: `Encrypted_${file.name}`,
+				download: encryptFileName(file.name),
 			  });
 			  a.click();
 			  console.log("Downloading..");
