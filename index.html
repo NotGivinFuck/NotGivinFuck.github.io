@@ -1,354 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vedro Lua Cryptor</title>
-    <style>
-      /* Animations */
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Vedro Lua Cryptor</title>
+	<style>
+	  /* Animations */
 
-      @keyframes popup {
-        0% {
-          transform: scale(0);
-        }
+	  @keyframes popup {
+		0% {
+		  transform: scale(0);
+		}
 
-        100% {
-          transform: scale(1);
-        }
-      }
+		100% {
+		  transform: scale(1);
+		}
+	  }
 
-      @keyframes idle {
-        0% {
-          transform: rotate(5deg);
-        }
+	  @keyframes idle {
+		0% {
+		  transform: rotate(5deg);
+		}
 
-        100% {
-          transform: rotate(-5deg);
-        }
-      }
+		100% {
+		  transform: rotate(-5deg);
+		}
+	  }
 
-      /* CSS */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        outline: none;
-        border: none;
-        text-decoration: none;
-      }
+	  /* CSS */
+	  * {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		outline: none;
+		border: none;
+		text-decoration: none;
+	  }
 
-      body {
-        display: flex;
-        font-family: Geneva, Verdana, sans-serif;
-        color: white;
-        height: 100vh;
-        background-color: #000;
-        justify-content: center;
-        align-items: center;
-      }
+	  body {
+		display: flex;
+		font-family: monospace;
+		color: white;
+		height: 100vh;
+		background-color: #000;
+		justify-content: center;
+		align-items: center;
+	  }
 
-      /* navbar */
-      .navbar {
-        display: flex;
-        height: 5rem;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.4rem 5%;
-        background-color: rgba(20, 20, 20);
-        border-bottom: 3px solid rgb(0, 255, 0);
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 9999;
-        box-shadow: 0 0px 20px #00FF00;
-      }
+	  /* navbar */
+	  .navbar {
+		display: flex;
+		height: 5rem;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1.4rem 5%;
+		background-color: rgba(20, 20, 20);
+		border-bottom: 3px solid rgb(0, 255, 0);
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 9999;
+		box-shadow: 0 0px 20px #00FF00;
+	  }
 
-      .logo span {
-        color: #00FF00;
-        transition: 0.2s ease-in-out;
-      }
+	  .logo span {
+		color: #00FF00;
+		transition: 0.2s ease-in-out;
+	  }
 
-      .logo {
-        display: flex;
-        transition: 0.2s ease-in-out;
-      }
+	  .logo {
+		display: flex;
+		transition: 0.2s ease-in-out;
+	  }
 
-      .logo:hover {
-        color: rgb(255, 255, 255);
-        transition: 0.2s ease-in-out;
-      }
-      .logo:hover span {
-        color: rgb(255, 255, 255);
-        transition: 0.2s ease-in-out;
-      }
+	  .logo:hover {
+		color: rgb(255, 255, 255);
+		transition: 0.2s ease-in-out;
+	  }
+	  .logo:hover span {
+		color: rgb(255, 255, 255);
+		transition: 0.2s ease-in-out;
+	  }
 
-      .nav a {
-        color: white;
-        display: inline-block;
-        font-size: 1rem;
-        margin: 0 1rem;
-        transition: 0.2s ease-in-out;
-        transform: scale(0.9);
-      }
+	  .nav a {
+		color: white;
+		display: inline-block;
+		font-size: 1rem;
+		margin: 0 1rem;
+		transition: 0.2s ease-in-out;
+		transform: scale(0.9);
+	  }
 
-      .nav a:hover {
-        color: rgb(255, 255, 255, 0.7);
-        transform: scale(1.1);
-        transition: 0.2s ease-in-out;
-      }
+	  .nav a:hover {
+		color: rgb(255, 255, 255, 0.7);
+		transform: scale(1.1);
+		transition: 0.2s ease-in-out;
+	  }
 
-      .nav a::after {
-        content: "";
-        display: block;
-        padding-bottom: 0.5rem;
-        border-bottom: 0.1rem solid white;
-        transform: scaleX(0);
-        transition: 0.2s linear;
-      }
+	  .nav a::after {
+		content: "";
+		display: block;
+		padding-bottom: 0.5rem;
+		border-bottom: 0.1rem solid white;
+		transform: scaleX(0);
+		transition: 0.2s linear;
+	  }
 
-      .nav a:hover::after {
-        transform: scaleX(1);
-      }
+	  .nav a:hover::after {
+		transform: scaleX(1);
+	  }
 
-      .nav a .t,
-      .account {
-        animation: popup 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) normal
-          calc(var(--order) * 100ms);
-      }
+	  .nav a .t,
+	  .account {
+		animation: popup 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) normal
+		  calc(var(--order) * 100ms);
+	  }
 
-      /* Profile */
-      .profile {
-        border-radius: 20px;
-        width: 2.5rem;
-        transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        height: 2.5rem;
-        background-image: url("https://i.ibb.co/tPDvC3F/photo-2023-05-31-03-11-52.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        box-shadow: 0 0 12px#00FF00;
-      }
-
-      .profile:hover {
-        border-radius: 13px;
-        border: 1.5px solid rgb(255, 255, 255, 1);
-        transform: scale(1.5);
-      }
-
-      .profile:active {
-        transform: scale(1.25);
-      }
-
-      /* Card Form */
-      form {
-        width: 75%;
-      }
-      .card {
-        display: block;
-        width: 100%;
-        position: relative;
-        background-color: rgba(20, 20, 20);
-
-        animation: popup 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1 normal
-          forwards;
-      }
-
-      .card-header {
-        display: flex;
-        padding: 1rem;
-        justify-content: center;
-        align-items: center;
-        border-bottom: 2px solid rgb(0, 255, 0);
-      }
-
-      .card-header h3 {
-        color: white;
-        transition: 0.5s;
-      }
-
-      .card-header h3:hover {
-        color: rgb(255, 143, 16);
-        transition: 0.5s;
-      }
-
-      .card-body {
-        padding: 1rem;
-      }
-
-      /* Uploading File */
-      .filescript {
-        margin-bottom: 1rem;
-      }
-
-      .filescript [type="file"] {
-        display: none;
-      }
-
-      .filescript label {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(68, 68, 68, 0.5);
-        border-radius: 5px;
-        color: rgba(255, 255, 255, 0.9);
-        padding: 10px;
-        transition: 0.2s ease-in-out;
-        border: 1px solid rgba(0, 255, 0);
+	  /* Profile */
+	  .profile {
 		border-radius: 20px;
-      }
+		width: 2.5rem;
+		transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		height: 2.5rem;
+		background-image: url("https://i.ibb.co/tPDvC3F/photo-2023-05-31-03-11-52.jpg");
+		background-size: cover;
+		background-repeat: no-repeat;
+		box-shadow: 0 0 12px#00FF00;
+	  }
 
-      .filescript #num-of-files {
-        display: flex;
-        position: relative;
-        margin-bottom: 1rem;
-      }
+	  .profile:hover {
+		border-radius: 13px;
+		border: 1.5px solid rgb(255, 255, 255, 1);
+		transform: scale(1.5);
+	  }
+
+	  .profile:active {
+		transform: scale(1.25);
+	  }
+
+	  /* Card Form */
+	  form {
+		width: 75%;
+	  }
+	  .card {
+		display: block;
+		width: 100%;
+		position: relative;
+		background-color: rgba(20, 20, 20);
+
+		animation: popup 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1 normal
+		  forwards;
+	  }
+
+	  .card-header {
+		display: flex;
+		padding: 1rem;
+		justify-content: center;
+		align-items: center;
+		border-bottom: 2px solid rgb(0, 255, 0);
+	  }
+
+	  .card-header h3 {
+		color: white;
+		transition: 0.5s;
+	  }
+
+	  .card-header h3:hover {
+		color: rgb(255, 143, 16);
+		transition: 0.5s;
+	  }
+
+	  .card-body {
+		padding: 1rem;
+	  }
+
+	  /* Uploading File */
+	  .filescript {
+		margin-bottom: 1rem;
+	  }
+
+	  .filescript [type="file"] {
+		display: none;
+	  }
+
+	  .filescript label {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: rgb(68, 68, 68);
+		padding: 10px;
+		transition: 0.2s ease-in-out;
+		border-radius: 20px;
+	  }
+
+	  .filescript #num-of-files {
+		display: flex;
+		position: relative;
+		margin-bottom: 1rem;
+	  }
 
       .filescript label:hover {
         transform: scale(0.95);
-        border: 2px solid rgb(255, 255, 255, 1);
-      }
+	  }
 
-      .filescript label:focus,
-      .filescript label:valid,
-      .filescript label:active {
-        border: 2px solid rgb(0, 255, 0);
-        transform: scale(0.9);
-      }
 
-      /* Key Input */
-      .inputBox {
-        margin-bottom: 0.4rem;
-        position: relative;
-        width: 250px;
-      }
-
-      .inputBox input {
-        width: 90%;
-        padding: 10px;
-        border: 1px solid rgba(0, 255, 0);
-        background: rgba(68, 68, 68, 0.5);
-        border-radius: 5px;
-        font-size: 1em;
-        color: white;
-        transition: 0.5s ease;
-      }
-
-      .inputBox span {
-        position: absolute;
-        left: 0;
-        padding: 10px;
-        font-size: 1em;
-        color: rgba(255, 255, 255, 0.25);
-        text-transform: uppercase;
-        transition: 0.5s ease;
-      }
-
-      .inputBox input:valid ~ span,
-      .inputBox input:focus ~ span {
-        color: rgb(255, 255, 255, 0.25);
-        transform: translateX(10px) translateY(-7px);
-        font-size: 0.65em;
-        padding: 0 10px;
-        background: rgb(68, 68, 68);
-        border-left: 1px solid rgb(255, 255, 255, 1);
-        border-right: 1px solid rgb(255, 255, 255, 1);
-      }
-
-      .inputBox input:valid,
-      .inputBox input:focus {
-        border: 1px solid rgb(255, 255, 255, 1);
-        background: rgb(68, 68, 68);
-      }
-
-      /* Button submit */
-      .card-body button {
+	  /* Button submit */
+	  .card-body button {
 		border-radius: 20px;
-        display: block;
-        margin-top: 1rem;
-        text-transform: uppercase;
-        color: white;
-        font-weight: 500;
-        font-size: 1.3em;
-        position: relative;
-        background: rgba(0, 255, 0);
-        padding: 15px 30px;
+		display: block;
+		margin-top: 1rem;
+		text-transform: uppercase;
+		color: white;
+		font-weight: 500;
+		font-size: 1.5rem;
+		position: relative;
+		background: rgb(68, 68, 68);
+		padding: 15px 60px;
+		font-family: monospace;
+		transition: 0.2s ease-in-out;
+	  }
+
+	  .card-body button:hover {
+		letter-spacing: 0.1em;
 		box-shadow: 0 0px 20px #00FF00;
-      }
+		background: rgba(0, 255, 0);
+	  }
 
-      .card-body button:hover {
-        letter-spacing: 0.25em;
-        background: rgb(255, 255, 255, 1);
-        color: rgb(255, 255, 255, 0.25);
-      }
-
-      .card-body button::before {
-        content: "";
-        position: absolute;
-        inset: 2px;
-        background: rgb(68, 68, 68);
+	  .card-body button:before {
+		content: "";
+		position: absolute;
+		inset: 2px;
+		background: rgb(68, 68, 68);
 		border-radius: 20px;
-      }
+	  }
 
-      .card-body button span {
-        position: relative;
-        z-index: 1;
-      }
+	  .card-body button span {
+		position: relative;
+		z-index: 1;
+	  }
 
-      .card-body button i {
-        position: absolute;
-        inset: 0;
-        display: block;
-      }
+	  .card-body button i {
+		position: absolute;
+		inset: 0;
+		display: block;
+	  }
 
 
-      .card-body button:hover i::before {
-        transform: translateX(-50%) translateY(-4px);
-        border: 2px solid #fff;
-        width: 30px;
-        left: 20%;
-      }
+	  .card-body button:hover i::before {
+		transform: translateX(-50%) translateY(-4px);
+		border: 2px solid #fff;
+		width: 30px;
+		left: 20%;
+	  }
 
-      .card-body button:hover i::after {
-        width: 150px;
-  height: 30px;
+	  .card-body button:hover i::after {
+		width: 150px;
+		height: 30px;
   
  }
  
-    </style>
+	</style>
   </head>
   <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-      <h1 class="logo"><span>vedr</span>Cryptor</h1>
-      <div class="account" style="--order: 4">
-        <div class="profile"></div>
-      </div>
-    </nav>
+	<!-- Navbar -->
+	<nav class="navbar">
+	  <h1 class="logo"><span>Vedro</span>Cryptor</h1>
+	  <div class="account" style="--order: 4">
+		<div class="profile"></div>
+	  </div>
+	</nav>
 
-    <!-- Card -->
-    <form id="form">
-      <div class="card">
-        <div class="card-header">
-          <h3>Crypt</h3>
-        </div>
-        <div class="card-body">
-          <div class="filescript">
-            <h3>Upload Your File Here!</h3>
-            <input type="file" id="file" />
-            <label for="file">Select file</label>
-            <div id="num-of-files">No File Choosen</div>
-            <h5>Only .lua .txt files</h5>
+	<!-- Card -->
+	<form id="form">
+	  <div class="card">
+		<div class="card-header">
+		  <h3>SAMP Lua Crypt</h3>
+		</div>
+		<div class="card-body">
+		  <div class="filescript">
+			<h3>Upload Your File Here!</h3>
+			<input type="file" id="file" />
+			<label for="file">Select file</label>
+			<div id="num-of-files">No File Choosen</div>
+			<h5>Only .lua .txt files</h5>
 		  </div>
-          <button type="submit" id="Crypt">
-            <span>Crypt</span><i></i>
-          </button>
-        </div>
-      </div>
-    </form>
-    <script>
+		  <button type="submit" id="Crypt">
+			<span>Crypt</span><i></i>
+		  </button>
+		</div>
+	  </div>
+	</form>
+	<script>
 	
 		function getRandomInt(min, max) {
 			return Math.floor(Math.random() * (max - min) + min);
@@ -382,17 +328,14 @@
 			
 			let antidecompile = `local _a = ({{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}})[1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][1]
 local function _() ::SOSAT:: goto SOSAT end
-local function __() return`;
-			for (let i = 0; getRandomInt(220, 228); i++) {
-				antidecompile += " " + getRandomInt(-2147483648, 2147483647) + ",";
-			}
-			antidecompile =  antidecompile + " " + getRandomInt(-2147483648, 2147483647) + " end\n";
+local function __() return 678561586, 1444652469, -1710062113, -640824719, 508876588, 994583942, -1697281242, 1636219952, -304646422, -428645643, 1004039234, -898237002, -539833204, 364845672, -1136355620, 1994806619, 1901702843, -874038681, 1671140862, -1427235705, -1011430520, -1201253252, 1201735053, 1671111940, -2130450572, -457486622, -1615878751, 404868566, 123737177, -1427739185, -1830587330, 434068833, -1755740619, -1674293987, 212118823, 1217760124, 1909971772, 1374053580, -2091346558, -766448598, -1891678567, -1602798090, 1687916039, -1331960890, 582187816, 860539403, 1462818846, 1198228002, -251044766, 269350914, 1293375035, 1298997882, -1831790771, -2099614621, 1132933037, 1030706937, -2065375383, 867636032, 1926648738, -1899292423, 460397184, -1245838749, -1474729455, 187620493, 918476135, 1583062631, 1210100845, -304528042, 1622854643, -1076348627, -1322535276, 604576613, 725187352, 827647148, 233834310, 557348484, 1610610247, -602616090, -2088915296, -742437375, 358651937, -782290548, -324960629, -1645214307, 2075473051, -37652548, -405818722, -1097070808, -1768329100, -1641387995, -1554335716, 12380255, -792531961, -300994671, -1586751064, 1829784831, 1331702543, -402122268, 1081728226, 2020854052, -1278349323, 1462677733, 1238985236, -1830154428, -1942887677, -2135998444, -2140552213, -1536127778, 100626970, 1481659144, 1416228294, 1345722877, -226880840, -1130636949, -927562457, 594489982, 989217843, -1128237890, 88871714, -1773736118, -1088709126, 1611631989, 778290372, -1690284339, 859224647, 709372593, -509226010, 386057006, -497118961, -992195362, -126239545, 770462303, 2110398102, -344352665, 1591951180, -237197044, -2070483865, 165377784, -1184452881, 637885665, -876698003, 465083090, -1054451755, -482795162, -2112808397, 1179605459, 2061278151, -766921283, 1858679284, -958203981, -1398666163, -1547675665, -410503999, -1686669573, 1765160288, -422115506, 503973406, 1171575892, -1518112188, 1242675539, 1522090227, 2086570523, -975713029, -1932861531, 313237249, 1678972626, -791706909, -673789646, 1785848186, 1372234276, -1736523075, 433561917, -578194608, -346220507, -1425476153, -699745191, 2023737738, 320156104, -1704262767, -60856434, 1350677084, -1524036948, 2102080413, -1372752656, 2120167887, 332916072, -1940906626, -960682952, -128432445, 2001043349, -765103791, -2036849849, -1299110164, 2011513595, -1365154493, 626680798, 178092034, -1467194259, 1493201194, 942695464, 1797435195, 1499795915, -491263935, -1316346360, -2005637161, 1794838037, 1647789026, -1443192756, -1308344470, 1306846129, -283426416, 1452193493, 1325914929, 770604890, -1579539950, 807929201, -537461739, 1580983312, -2061364136, 1698435827, -1782940174, -2127172868, 2107896047, 1830252575 end
+`;
 			crypted_text = antidecompile + `local g = _G
 local char = 'c'
 local str = ''
 
 local function _____()
-return str[char .. 'r']
+	return str[char .. 'r']
 end
    
 char = char .. 'h' .. 'a'
@@ -400,44 +343,44 @@ char = char .. 'h' .. 'a'
 local char = _____()
 
 local chars = {
-    {
-        166,
-        154,
-        173,
-        161
-    },
+	{
+		166,
+		154,
+		173,
+		161
+	},
 
-    {
-        171,
-        154,
-        167,
-        157,
-        168,
-        166
-    }
+	{
+		171,
+		154,
+		167,
+		157,
+		168,
+		166
+	}
 }
 
 local math = ''
 local random = ''
 
 for i = 1, #chars[1] do
-    math = math..char(chars[1][i] - 57)
+	math = math..char(chars[1][i] - 57)
 end
 for i = 1, #chars[2] do
-    random = random..char(chars[2][i] - 57)
+	random = random..char(chars[2][i] - 57)
 end
 
 local random = g[math][random]
 
 local function decrypt(tab) -- decrypt
-    local a, b = tab[2][1], tab[2][2]
-    local n1, n2 = random(20), random(20)
-    while tab[1][a + 1] - n2 + n1 ~= b do n1, n2 = random(20), random(20) end
-    local decrypt_text = ''
-    for i = 2, tab[1][1] + 1 do
-        decrypt_text = decrypt_text .. char(tab[1][i] - n2 + n1)
-    end
-    return decrypt_text
+	local a, b = tab[2][1], tab[2][2]
+	local n1, n2 = random(20), random(20)
+	while tab[1][a + 1] - n2 + n1 ~= b do n1, n2 = random(20), random(20) end
+	local decrypt_text = ''
+	for i = 2, tab[1][1] + 1 do
+		decrypt_text = decrypt_text .. char(tab[1][i] - n2 + n1)
+	end
+	return decrypt_text
 end
 
 local res = decrypt` + crypted_text + `
@@ -454,49 +397,52 @@ local dump = g[string][dump]
 local resc = pcall(dump, loadstring)
 
 if not resc then
-    lua_thread[create](function() loadstring(res)() end)
+	lua_thread[create](function() loadstring(res)() end)
 end`;
 			return crypted_text;
 		};
 	
-      const fileInput = document.getElementById("file");
-      const fileChoosen = document.getElementById("num-of-files");
-      const read = new FileReader();
-      const form = document.getElementById("form");
-      console.log(form);
+	  const fileInput = document.getElementById("file");
+	  const fileChoosen = document.getElementById("num-of-files");
+	  const read = new FileReader();
+	  const form = document.getElementById("form");
+	  console.log(form);
 
-      fileInput.addEventListener("change", () => {
-        let fileName = fileInput.files[0].name;
-        let fileSize = (fileInput.files[0].size / 1024).toFixed(2);
-        if (fileName.endsWith(".lua") || fileName.endsWith(".txt")) {
-          fileChoosen.innerHTML = `${fileName} (${fileSize}Kb)`;
-        } else {
-          fileChoosen.innerHTML = `Please upload only lua file or txt file!`;
-        }
-      });
+	  fileInput.addEventListener("change", () => {
+		let fileName = fileInput.files[0].name;
+		let fileSize = (fileInput.files[0].size / 1024).toFixed(2);
+		if (fileName.endsWith(".lua") || fileName.endsWith(".txt")) {
+		  fileChoosen.innerHTML = `${fileName} (${fileSize}Kb)`;
+		} else {
+		  fileChoosen.innerHTML = `Please upload only lua file or txt file!`;
+		}
+	  });
 
-      form.addEventListener("submit", (event) => {
-        console.log("Encrypting..");
-        let file = document.getElementById("file").files[0];
-        if (file == null) alert("Please upload file first!");
-        read.readAsText(file);
-        read.onload = () => {
-          const sc = read.result;
-          const Output =
-            crypt(sc)
-          let blob = new Blob([Output], { type: "octet-stream" });
-          const href = URL.createObjectURL(blob);
-          const a = Object.assign(document.createElement("a"), {
-            href,
-            style: "display:none",
-            download: `Encrypted_${file.name}`,
-          });
-          a.click();
-          console.log("Downloading..");
-          URL.revokeObjectURL(href);
-          a.remove();
-        };
-      });
-    </script>
+	  form.addEventListener("submit", (event) => {
+		console.log("Encrypting..");
+		let file = document.getElementById("file").files[0];
+		if (file == null) {
+			alert("Please upload file first!");
+		} else {
+			read.readAsText(file);
+			read.onload = () => {
+			  const sc = read.result;
+			  const Output =
+				crypt(sc)
+			  let blob = new Blob([Output], { type: "octet-stream" });
+			  const href = URL.createObjectURL(blob);
+			  const a = Object.assign(document.createElement("a"), {
+				href,
+				style: "display:none",
+				download: `Encrypted_${file.name}`,
+			  });
+			  a.click();
+			  console.log("Downloading..");
+			  URL.revokeObjectURL(href);
+			  a.remove();
+			};
+		};
+	  });
+	</script>
   </body>
 </html>
