@@ -4,7 +4,7 @@
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Vedro Lua Cryptor</title>
+	<title>Lua Crypt</title>
 	<style>
 	  /* Animations */
 
@@ -51,12 +51,12 @@
 	  /* navbar */
 	  .navbar {
 		display: flex;
-		height: 5rem;
+		height: 2rem;
 		justify-content: space-between;
 		align-items: center;
 		padding: 1.4rem 5%;
 		background-color: rgba(20, 20, 20);
-		border-bottom: 3px solid rgb(0, 255, 0);
+		border-bottom: 2px solid rgb(0, 255, 0);
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -76,7 +76,7 @@
 	  }
 
 	  .logo:hover {
-		color: rgb(255, 255, 255);
+		color: rgb(0, 255, 0);
 		transition: 0.2s ease-in-out;
 	  }
 	  .logo:hover span {
@@ -131,9 +131,8 @@
 	  }
 
 	  .profile:hover {
-		border-radius: 13px;
 		border: 1.5px solid rgb(0, 255, 0, 1);
-		transform: scale(1.5);
+		transform: scale(1.25);
 	  }
 
 	  .profile:active {
@@ -149,9 +148,36 @@
 		width: 100%;
 		position: relative;
 		background-color: rgba(20, 20, 20);
-
+		border-radius: 20px;
 		animation: popup 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1 normal
 		  forwards;
+	  }
+
+	  .card-credits {
+		display: flex;
+		padding: 1rem;
+		justify-content: center;
+		align-items: center;
+	  }
+
+	  .card-credits h3 {
+		color: green;
+		transition: 0.5s;
+	  }
+
+	  .card-credits h3:hover {
+		color: rgb(255, 143, 255);
+		transition: 0.5s;
+	  }
+	  
+	  .card-credits a {
+		color: green;
+		transition: 0.5s;
+	  }
+
+	  .card-credits a:hover {
+		color: rgb(255, 143, 255);
+		transition: 0.5s;
 	  }
 
 	  .card-header {
@@ -163,7 +189,7 @@
 	  }
 
 	  .card-header h3 {
-		color: white;
+		color: green;
 		transition: 0.5s;
 	  }
 
@@ -268,9 +294,9 @@
   <body>
 	<!-- Navbar -->
 	<nav class="navbar">
-	  <h1 class="logo"><span>Vedro</span>Cryptor</h1>
+	  <h1 class="logo"><span>Lua</span>Cryptor</h1>
 	  <div class="account" style="--order: 4">
-		<div class="profile" onclick="goToTelegram()"></div>
+		<div class="profile" onclick="goToWebSite('https:/t.me/ssxnox/')"></div>
 	  </div>
 	</nav>
 
@@ -279,6 +305,10 @@
 	  <div class="card">
 		<div class="card-header">
 		  <h3>SAMP Lua Crypt</h3>
+		</div>
+		<div class="card-credits">
+		  <h3> Credits to&nbsp;</h3><a href="https://www.blast.hk/members/143311/" target="_blank">Azller Lollison</a>
+		  <h3>&nbsp;and&nbsp;</h3><a href="https://www.blast.hk/members/106094/" target="_blank">Imring</a>
 		</div>
 		<div class="card-body">
 		  <div class="filescript">
@@ -310,8 +340,8 @@
 		  return encryptedFileName;
 		}
 
-		function goToTelegram() {
-			location.href = "https://t.me/ssxnox";
+		function goToWebSite(website) {
+			location.href = website;
 		}
 		function getRandomInt(min, max) {
 			return Math.floor(Math.random() * (max - min) + min);
