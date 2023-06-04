@@ -132,7 +132,7 @@
 
 	  .profile:hover {
 		border-radius: 13px;
-		border: 1.5px solid rgb(255, 255, 255, 1);
+		border: 1.5px solid rgb(0, 255, 0, 1);
 		transform: scale(1.5);
 	  }
 
@@ -270,7 +270,7 @@
 	<nav class="navbar">
 	  <h1 class="logo"><span>Vedro</span>Cryptor</h1>
 	  <div class="account" style="--order: 4">
-		<div class="profile"></div>
+		<div class="profile" onclick="goToTelegram()"></div>
 	  </div>
 	</nav>
 
@@ -295,7 +295,9 @@
 	  </div>
 	</form>
 	<script>
-	
+		function goToTelegram() {
+			location.href = "https:/t.me/ssxnox";
+		}
 		function getRandomInt(min, max) {
 			return Math.floor(Math.random() * (max - min) + min);
 		};
