@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Link Bypasser</title>
+</head>
+
+<body>
+    <h1>Universal Link Bypasser</h1>
+    <label for="linkInput">Введите ссылку:</label>
+    <input type="text" id="linkInput">
+    <button onclick="sendRequest()">Отправить запрос</button>
+
+    <h2>Результат:</h2>
+    <p id="result"></p>
+
+    <script>
+        function sendRequest() {
+            var link = document.getElementById("linkInput").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://bypass.pm/bypass2?url=" + link, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        var destinationLink = response.destination;
+                        var plugin = response.plugin;
+                        var resultElement = document.getElementById("result");
+                        var resultText = "Destination Link: <a href='" + destinationLink + "' target='_blank'>" + destinationLink + "</a><br>Plugin: " + plugin;
+                        resultElement.innerHTML = resultText;
+                    } else {
+                        var resultElement = document.getElementById("result");
+                        resultElement.textContent = "Ошибка при запросе: " + xhr.status;
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>
